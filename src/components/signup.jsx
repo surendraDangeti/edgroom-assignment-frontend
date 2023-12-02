@@ -7,7 +7,7 @@ import {
   Button,
   CssBaseline,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import usePostApi from './PostApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +22,7 @@ const SignUpComponent = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [reEnterPasswordError, setReEnterPasswordError] = useState("");
-
+  const navigate = useNavigate();
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const usernameRegex = /^[a-zA-Z0-9_-]{3,}$/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -91,6 +91,11 @@ const SignUpComponent = () => {
         console.error("Error:", error.message);
       } else {
         toast.success(response);
+        usernameRef.current.value = "";
+        passwordRef.current.value= "";
+        emailRef.current.value= "";
+        reEnterPasswordRef.current.value= "";
+        navigate('/')
       }
     } catch (error) {
       console.log("Unexpected Error:", error.message);
